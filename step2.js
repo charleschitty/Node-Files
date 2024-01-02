@@ -11,16 +11,25 @@ async function cat(path){
     console.log("file contents: ", contents);
 
   } catch (err) {
-    console.log("Error: ", err);
+    console.log(`Error reading ${path}: ${err}`);
     process.exit(1);
   }
 }
 
-cat(process.argv[2]);
+// cat(process.argv[2]);
+
+/** Receives an url, if valid URL, print content of URL . */
 
 async function webCat(url){
-  const content = await fetch(url)
-  console.log("Content: ", content)
-}
+  try{
+  const response = await fetch(url);
+  let respInHTML = await response.text();
+  console.log("Content: ", respInHTML);
+  } catch(err) {
+    console.log(`Error fetching ${url}: ${err}`);
+    process.exit(1);
 
-webCat(process.argv[2]);
+  }
+}
+let path = process.argv[2];
+URL.canParse(path) ? webCat(path) : cat(path);
