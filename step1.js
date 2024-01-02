@@ -11,7 +11,7 @@ async function cat(path){
     console.log("file contents: ", contents);
 
   } catch (err) {
-    console.log("Error: ", err);
+    console.error(`Error reading ${path}: ${err}`);
     process.exit(1);
   }
 }

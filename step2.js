@@ -7,12 +7,10 @@ const fsP = require("fs/promises");
  */
 async function cat(path) {
   try {
-
     const contents = await fsP.readFile(path, "utf8");
     console.log("File Content: ", contents);
 
   } catch (err) {
-
     console.error(`Error reading ${path}: ${err}`);
     process.exit(1);
   }
@@ -22,16 +20,18 @@ async function cat(path) {
  * print error if invalid URL*/
 
 async function webCat(url) {
+  let response;
+
   try {
     const response = await fetch(url);
-    const respInHTML = await response.text();
-    console.log("URL Content: ", respInHTML);
 
   } catch (err) {
     console.error(`Error fetching ${url}: ${err}`);
     process.exit(1);
   }
+  const respInHTML = await response.text();
+  console.log("URL Content: ", respInHTML);
 }
 
-const PATH = process.argv[2];
-URL.canParse(PATH) ? webCat(PATH) : cat(PATH);
+const path = process.argv[2];
+URL.canParse(path) ? webCat(path) : cat(path);
